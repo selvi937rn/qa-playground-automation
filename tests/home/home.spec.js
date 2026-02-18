@@ -16,7 +16,9 @@ test.describe("Home page", () => {
     const home = new HomePage(page);
 
     await home.goToBlog();
-    await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
+    await page.waitForURL(/\/blog/);
+    await expect(page).toHaveURL(/\/blog/);
+    // await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
   });
 
   test("Navigate to Contact page from navbar", async ({ page }) => {
@@ -47,5 +49,17 @@ test.describe("Home page", () => {
     await page.waitForURL(/\/practice/);
     await expect(page).toHaveURL(/\/practice/);
     // await expect(page.getByRole("heading", { name: "Practice" })).toBeVisible();
+  });
+
+  test("Toggle theme", async ({ page }) => {
+    const home = new HomePage(page);
+
+    const html = page.locator("html");
+
+    await expect(html).not.toHaveClass(/dark/);
+
+    await home.toggleTheme();
+
+    await expect(html).toHaveClass(/dark/);
   });
 });

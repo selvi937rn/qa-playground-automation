@@ -18,7 +18,7 @@ export class HomePage {
     .locator('nav')
     .getByRole('link', { name: 'Practice' });
 
-    this.themeToggle = page.getByRole('button');
+    this.themeToggle = page.getByRole('button', { name: 'Toggle theme' });
   }
 
   async open() {
